@@ -3,9 +3,9 @@ using namespace std;
 
 int a[1000][1000], visited[1000][1000];
 int n,m;
-// for      ""
-int hy[4] = {0,-1,1,0}; // hang
-int hx[4] = {1,0,0,-1}; // cot
+
+int hy[4] = {0,-1,1,0}; // row
+int hx[4] = {1,0,0,-1}; // col
 int step = 0;
 int ok = -1;
 map<int,int> stepMap;
@@ -59,7 +59,7 @@ int main(){
   stepMap[0] = 1;
   bfs(r,c);
   if(ok == 1){
-    cout << step;
+    cout << ++step;
   }
   else cout << ok;
 }
