@@ -1,16 +1,35 @@
 #include<bits/stdc++.h>
 using namespace std;
-int n, K, Q, d[13], u[13][13],nbR = 0, f = 0, fbest = 1e9, Cmin = 1e9;
-int segments = 0, y[13], x[13], loadCap[6];
+
+int n, K, Q, c,d[13], u[13][13],
+f = 0, fbest = 1e9, Cmin = 1e9,
+segments = 0, nbR = 0,
+y[13], x[13], loadCap[6];
+set<int> conflict[13], truck[6];
 bool visited[13];
 
+
+int cnt = 0;
+
 void updateBest(){
-  fbest = min(fbest, f);
+  if(f < fbest){
+    fbest = min(fbest, f);
+    cnt++;
+    if(cnt == 3){
+      for(int x : truck[1]) cout << x << " ";
+      cout << "\n";
+      for(int x : truck[2]) cout << x << " ";
+      cout << "\n";
+    }
+  }
 }
 
 bool checkX(int v, int k){
   if(v > 0 && visited[v]) return false;
   if (loadCap[k] + d[v] > Q) return false;
+  for(int x : conflict[v]){
+    if(truck[k].find(x) != truck[k].end()) return false;
+  }
   return true;
 }
 
@@ -24,6 +43,7 @@ void TryX(int s,int k){
       x[s] = i; visited[i] = true;
       f += u[s][i]; loadCap[k] += d[i];
       segments++;
+      truck[k].insert(i);
       if(i > 0){
         if(f + (n+nbR-segments)*Cmin < fbest) TryX(i,k);
       }
@@ -39,6 +59,7 @@ void TryX(int s,int k){
       f -= u[s][i];
       loadCap[k] -= d[i];
       segments--;
+      truck[k].erase(i);
     }
   }
 }
@@ -59,11 +80,13 @@ void TryY(int k){
       visited[i] = true; 
       f += u[0][i];
       loadCap[k] += d[i];
+      truck[k].insert(i);
       if(k < K) TryY(k+1);
       else{
         nbR = segments;
         TryX(y[1], 1);
       }
+      truck[k].erase(i);
       loadCap[k] -= d[i];
       visited[i] = false;
       f -= u[0][i];
@@ -80,8 +103,15 @@ int main(){
   for(int i = 0; i <= n; i++)
     for(int j = 0; j <= n; j++){
       cin >> u[i][j];
-      if(i != j && u[i][j] < Cmin) Cmin = u[i][j];
+      if(i != j) Cmin = min(Cmin,u[i][j]);
     } 
+  cin >> c;
+  while(c--){
+    int x, y;
+    cin >> x >> y;
+    conflict[x].insert(y);
+    conflict[y].insert(x);
+  }
   TryY(1);
   cout << fbest;
 }

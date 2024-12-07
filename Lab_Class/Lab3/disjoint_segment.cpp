@@ -2,39 +2,26 @@
 #define faster() ios_base::sync_with_stdio(false); cin.tie(NULL);
 using namespace std;
 
-bool cmp(pair<int,int> a, pair<int,int> b) {
+bool cmp(pair<int,int> a, pair<int,int>b){
     return a.second < b.second;
 }
 
 int main() {
-    faster();
-    int n;
-    cin >> n;
-    vector<pair<int,int>> vt(n);
-    vector<pair<int,int>> ans;
-    for(int i = 0; i < n; i++) {
-        int x, y;
-        cin >> x >> y;
-        vt[i] = {x, y};
+    vector<pair<int,int>> v;
+    int n; cin >> n;
+    while(n--){
+        int a, b;
+        cin >> a >> b;
+        v.push_back({a,b});
     }
-    sort(vt.begin(), vt.end(), cmp);
-    //ans.push_back({vt[0].first, vt[0].second});
-    /*int l = 0;
-    for(int i = 1; i < n; i++) {
-        if(vt[i].second < ans[l].first) {
-            l++;
-            ans.push_back({vt[i].first, vt[i].second});
-        }
-    }*/
-    
-    //cout << ans.size() << endl;
-    int cnt=0,last_seg=-1;
-    for(int i=0;i<n;i++){
-        if(vt[i].first > last_seg){
+    sort(v.begin(), v.end(), cmp);
+    int cnt = 0, lastSegment = -1;
+    for(int i = 0; i < v.size(); i++){
+        if(v[i].first > lastSegment){
             cnt++;
-            last_seg=vt[i].second;
+            lastSegment = v[i].second;
         }
-    }
-    cout<<cnt;
-    return 0;
+    } 
+    cout<<cnt << "\n";
+
 }
