@@ -31,15 +31,18 @@ int main(){
     mp[x]++;
   }
   map<int,int>::iterator it = mp.begin();
-  int prv = (*it).second;
+  int prv_key = (*it).first;
+  int prv_val = (*it).second;
   it++;
   for(; it != mp.end(); it++){
-    int cur = (*it).second;
-    if(cur - prv == 1){
-      res += max(prv, cur);
+    int cur_key = (*it).first;
+    int cur_val = (*it).second;
+    if(cur_key - prv_key == 1){
+      res += cur_val*prv_val;
       res %= MOD;
     }
-    prv = cur;
+    prv_key = cur_key;
+    prv_val = cur_val;
   }
   cout << res;
 }
