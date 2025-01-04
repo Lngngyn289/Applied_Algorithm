@@ -3,7 +3,6 @@ using namespace std;
 
 int n, T, d;
 int a[1001], t[1001], dp[1001][101];
-
 int main(){
   cin >> n >> T >> d;
   memset(dp, 0, sizeof(dp));
@@ -19,8 +18,6 @@ int main(){
       }
     }
   }
-
-
   int res = 0;
   for(int i = 1; i <=n; i++){
     for(int j = 1; j <=T; j++){

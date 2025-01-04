@@ -28,7 +28,6 @@ bool check(int t, int k){
     if(conflict[i][k] && X[i] == t) return false;
   return true;
 }
-
 void solution(){
   int maxLoad = 0;
   for(int t = 1; t <= m; t++){
@@ -36,7 +35,6 @@ void solution(){
   }
   if(maxLoad < res) res = maxLoad;
 }
-
 void Try(int k){
   for(int i = 0; i < T[k].size(); i++){
     int t = T[k][i];
@@ -51,8 +49,6 @@ void Try(int k){
     }
   }
 }
-
-
 int main(){
   input();
   memset(load, 0, sizeof(load));
